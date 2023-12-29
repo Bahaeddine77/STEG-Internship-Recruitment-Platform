@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>STEG</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+
+/* Hide the sidebar initially */
+  .w3-sidebar {
+    display: none;
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    top: 0;
+    left: -250px;
+    background-color: #f1f1f1;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+  }
+
+  /* Show the sidebar when active */
+  .w3-sidebar.active {
+    left: 0;
+  }
+
+    /* Position the close button on the right */
+  #closeSidebarButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .navbar {
+    height: 80px; /* Increase the height as needed */
+}
+
+.navbar-nav .nav-link {
+    font-size: 24px; /* Increase the font size as needed */
+}
+
+.navbar-nav .nav-link {
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+    border-radius: 40%; /* Make the items circular */
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(254, 152, 152, 0.7); /* Change the color to match your background color */
+    border-radius: 40%; /* Keep the hover effect circular */
+}
+</style>
+
+
+
+
+
+</style>
+
+<nav class="navbar navbar-expand navbar-dark" aria-label="Second navbar example">
+  <div class="container-fluid">
+    {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+      <button class="w3-button w3-xlarge" id="sidebarButton" onclick="toggleSidebar()">&#9776;</button>
+    {% endif %}
+    <div class="navbar-collapse justify-content-between">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+        {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+          <a class="nav-link active" aria-current="page" href="{{path('app_stagiaire')}}">Home</a>
+        {% else %}
+          <a class="nav-link active" aria-current="page" href="{{path('app_user_front')}}">Home</a>
+
+        {% endif %}
+        </li>
+      </ul>
+        <ul class="navbar-nav">
+          {% if app.user %}
+          <li class="nav-item">
+             <a href="#" onclick="event.preventDefault(); document.getElementById('js-logout-form').submit()" class="nav-link">Logout</a>
+
+                            <form id='js-logout-form' action="{{ path('app_logout')}}" method='post' style="display:none;">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout')}}">
+                            </form>
+          </li>
+          {% else %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('app_register')}}">S'inscrire</a>
+            </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{path('app_login')}}">Se Connecter</a>
+            </li>
+          {% endif %}
+        </ul>
+      
+    </div>
+  </div>
+</nav>
+
+  
+</head>
+<body class="w3-content" style="max-width:1500px">
+
+<!-- Navbar -->
+
+
+
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;" id="mySidebar">
+    <!-- Sidebar content here -->
+    <button class="w3-button w3-white w3-margin-left" id="closeSidebarButton" onclick="closeSidebar()">&#10005;</button>
+
+ 
+  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+    <a href="{{path ("app_stagiaire")}}" class="w3-bar-item w3-button">Liste des Stagiaires</a>
+    <a href="{{path ("app_stagiaire_create")}}" class="w3-bar-item w3-button">Ajouter Stagiaire</a>
+
+    <a onclick="encadrantBar()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+      Encadrant <i class="fa fa-caret-down"></i>
+    </a>
+    <div id="encadrantB" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+      <a href="{{path ("app_encadrant")}}" class="w3-bar-item w3-button">Liste des Encadrants</a>
+      <a href="{{path ("app_encadrant_create")}}" class="w3-bar-item w3-button">Ajouter Encadrant</a>
+    </div>
+
+    <a onclick="stageBar()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+      Stage <i class="fa fa-caret-down"></i>
+    </a>
+    <div id="stageB" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+      <a href="{{path ("app_stage")}}" class="w3-bar-item w3-button">Liste des Stages</a>
+      <a href="{{path ("app_stage_create")}}" class="w3-bar-item w3-button">Ajouter Stage</a>
+    </div>
+
+   
+
+  
+
+</nav>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:0; transition: margin-left .3s">
+
+
+  <!-- Push down content on small screens -->
+  <div class="w3-hide-large" style="margin-top:83px"></div>
+
+  
+  <script>
+// Accordion 
+function encadrantBar() {
+  var x = document.getElementById("encadrantB");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+function stageBar() {
+  var x = document.getElementById("stageB");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+function absenceBar() {
+  var x = document.getElementById("absenceB");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+function rechercheBar() {
+  var x = document.getElementById("rechercheB");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// Click on the "Jeans" link on page load to open the accordion for demo purposes
+document.getElementById("myBtn").click();
+
+
+// Open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+
+
+function w3_close() {
+  var sidebar = document.getElementById("mySidebar");
+  if (sidebar.style.display === "block") {
+    sidebar.style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+}
+
+
+
+
+function toggleSidebar() {
+    var sidebar = document.getElementById("mySidebar");
+    var content = document.querySelector(".w3-main");
+
+    if (sidebar.classList.contains("active")) {
+        sidebar.classList.remove("active");
+        content.style.marginLeft = "0";
+    } else {
+        sidebar.classList.add("active");
+        content.style.marginLeft = "250px";
+    }
+}
+
+function toggleSidebar1() {
+    var sidebar = document.getElementById("mySidebar");
+    var overlay = document.getElementById("myOverlay");
+    
+    if (sidebar.style.display === 'block') {
+        sidebar.style.display = 'none';
+        overlay.style.display = 'none';
+    } else {
+        sidebar.style.display = 'block';
+        overlay.style.display = 'block';
+    }
+}
+
+function closeSidebar() {
+    var sidebar = document.getElementById("mySidebar");
+    var content = document.querySelector(".w3-main");
+
+    if (sidebar.classList.contains("active")) {
+        sidebar.classList.remove("active");
+        content.style.marginLeft = "0";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  var x = document.getElementById("encadrantB");
+  x.className = x.className.replace(" w3-show", "");
+});
+</script>

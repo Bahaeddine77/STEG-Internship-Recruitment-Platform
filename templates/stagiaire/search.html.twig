@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Stagiaires' %}
+
+{% block body %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+   <table class="table">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+          
+            <th>Genre</th>
+            <th>Nationalité</th>
+            <th>Mobile</th>
+            <th>Spécialité</th>
+            <th>Encadrant</th>
+            <th>Stage</th>
+            <th>Actions</th>
+        </tr>
+
+        
+        {% for stagiaire in stagiaires %} 
+                <tr>
+                    <th>{{stagiaire.nomStagiaire}}</th>
+                    <th>{{stagiaire.prenomStagiaire}}</th>
+                    <th>{{stagiaire.genre}}</th>
+                    <th>{{stagiaire.nationalite}}</th>
+                    <th>{{stagiaire.mobile}}</th>
+                    <th>{{stagiaire.specialite}}</th>
+                    <th>{{stagiaire.encadrant}}</th>
+                    <th>{{stagiaire.stage}}</th>
+                    <th>
+                        
+                        <a href="{{path('app_stagiaire_edit' , {id: stagiaire.id})}}" class='btn btn-success'>Modifier</a>
+            
+                        <a href="#" onclick="event.preventDefault(); deletestagiaire({{ stagiaire.id }});" class="btn btn-danger">Supprimer</a>
+                        <form id="stagiaire-delete-form-{{ stagiaire.id }}" action="{{ path('app_stagiaire_delete', {id: stagiaire.id}) }}" method="post" style="display: none;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token('stagiaire_deletion_' ~ stagiaire.id) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                        </form>
+                  
+
+                        <script>
+                            function deletestagiaire(stagiaireId) {
+                                const form = document.getElementById('stagiaire-delete-form-' + stagiaireId);
+                                form.submit();
+                            }
+                        </script>
+
+                    </th>
+                </tr>
+
+              
+            </div>
+            
+        {% endfor %}
+
+
+
+{% endblock %}

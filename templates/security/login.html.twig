@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1 class="h1 mb-5 font-weight-normal text-center">Connectez-vous, S'il vous plaît</h1>
+            <label for="inputEmail">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4 mt-3" autocomplete="email" required autofocus>
+            <label for="inputPassword">Password</label>
+            <input type="password" name="password" id="inputPassword" class="form-control mb-4 mt-3" autocomplete="current-password" required>
+
+               
+                
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            <button class="custom-submit-button" type="submit">
+                Sign in
+            </button>
+                <div class="mt-5 mb-3 text-center " >Pas de Compte ? <a href="#" class="text-decoration-none text-gray">Créer un ici</a> </div>
+            <a href="{{path ('app_forgot_password_request')}}" class="text-decoration-none text-gray">Mot de passe oublié ?</a>
+        </div>
+    </div>
+</form>
+{% endblock %}

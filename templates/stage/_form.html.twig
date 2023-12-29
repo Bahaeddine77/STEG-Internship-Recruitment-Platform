@@ -1,0 +1,57 @@
+{{ form_start(stage) }}
+    <div class="row">
+        <div class="form-group">
+    
+            {{ form_label(stage.titre, 'Titre') }}
+            {{ form_widget(stage.titre, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(stage.description) }}
+            {{ form_widget(stage.description, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    
+    </div>
+
+
+    <div class="row">
+
+        <div class="form-group col-md-6">
+            {{ form_label(stage.date_debut, 'Date de début') }}
+            {{ form_widget(stage.date_debut, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            {{ form_label(stage.date_fin, 'Date de fin') }}
+            {{ form_widget(stage.date_fin, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            {{ form_label(stage.duree, 'Durée (mois)' ) }}
+            {{ form_widget(stage.duree, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+
+        <div class="form-group col-md-6">
+            {{ form_label(stage.typeStage, 'Type de Stage') }}
+            {{ form_widget(stage.typeStage, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+
+    
+
+    <div class="form-group mb-4">
+        {{ form_label(stage.encadrant) }}
+        {{ form_widget(stage.encadrant, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    
+
+    
+    
+    <input type="submit" value="{{submitText ?? 'Ajouter stage'}}" class="custom-submit-button">
+
+{{ form_end(stage) }}

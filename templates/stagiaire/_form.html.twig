@@ -1,0 +1,108 @@
+{{ form_start(stagiaire) }}
+    
+    <legend style="color: #DAFAF9;">Informatique Stagiaire</legend>
+    <div class="row">
+        <div class="form-group col-md-6">
+    
+            {{ form_label(stagiaire.nomStagiaire, 'Nom') }}
+            {{ form_widget(stagiaire.nomStagiaire, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            {{ form_label(stagiaire.prenomStagiaire, 'Prénom') }}
+            {{ form_widget(stagiaire.prenomStagiaire, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    
+    </div>
+
+    <div class="row">
+
+        <div class="form-group col-md-6">
+            {{ form_label(stagiaire.piece_identite, 'Pièce Identité') }}
+            {{ form_widget(stagiaire.piece_identite, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            {{ form_label(stagiaire.num_piece_identite, 'Num de Pièce Identité') }}
+            {{ form_widget(stagiaire.num_piece_identite, { 'attr': {'class': 'form-control'} }) }}
+            
+        </div>
+    </div>
+
+    <div class="row">                
+        <div class="form-group col-md-4">
+            {{ form_label(stagiaire.genre) }}
+            {{ form_widget(stagiaire.genre, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        
+
+        <div class="form-group col-md-4">
+            {{ form_label(stagiaire.nationalite, 'Nationalité') }}
+            {{ form_widget(stagiaire.nationalite, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group col-md-4">
+            {{ form_label(stagiaire.gouvernorat) }}
+            {{ form_widget(stagiaire.gouvernorat, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="form-group col-md-6">
+            {{ form_label(stagiaire.mobile) }}
+            {{ form_widget(stagiaire.mobile, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+       <div class="form-group col-md-6">
+    {{ form_label(stagiaire.date_naissance, 'Date de naissance') }}
+    {{ form_widget(stagiaire.date_naissance, { 'attr': {'class': 'form-control', 'type': 'date'} }) }}
+</div>
+    </div>
+
+    <legend style="color: DAFAF9;">Informatique Institut</legend>
+    <div class="row mb-5">
+        <div class="form-group col-md-4">
+            {{ form_label(stagiaire.diplome) }}
+            {{ form_widget(stagiaire.diplome, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group col-md-4">
+            {{ form_label(stagiaire.specialite, 'Spécialité') }}
+            {{ form_widget(stagiaire.specialite, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group col-md-4">
+            {{ form_label(stagiaire.institut) }}
+            {{ form_widget(stagiaire.institut, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+
+    <legend style="color: DAFAF9;">Informatique Stage</legend>
+    <div class="form-group">
+        {{ form_label(stagiaire.indemnite, 'Indemnité') }}
+        {{ form_widget(stagiaire.indemnite, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    
+
+    <div class="form-group">
+        {{ form_label(stagiaire.encadrant) }}
+        {{ form_widget(stagiaire.encadrant, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(stagiaire.stage) }}
+        {{ form_widget(stagiaire.stage, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+  
+
+    <div class="form-group mb-4">
+        {{ form_label(stagiaire.brochure) }}
+        {{ form_widget(stagiaire.brochure, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    
+    
+    <input type="submit" value="{{submitText ?? 'Ajouter Stagiaire'}}" class="custom-submit-button">
+
+{{ form_end(stagiaire) }}

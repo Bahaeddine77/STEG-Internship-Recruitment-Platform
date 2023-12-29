@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Stages' %}
+
+{% block body %}
+
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+        body {
+            background: linear-gradient(135deg, #white, #ff5f6d);
+            
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+                
+            
+
+                
+            }
+    </style>
+
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Liste des Stages</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="stagiaires-table" class="table table-bordered table-hover">
+                  <thead>
+                <tr>
+                    <th data-order="titre">Titre</th>
+                    <th data-order="typeStage">Type de stage</th>
+                    <th data-order="duree">Durée</th>
+                    <th>Encadrant</th>
+                    <th style="width: 200px;">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                
+                {% for stage in stages %}
+                    
+                        <tr>
+                            <td>{{stage.titre}}</td>
+                            <td>{{stage.typeStage}}</td>
+                            <td>{{stage.duree}}</td>
+                            <td>{{stage.encadrant}}</td>
+                            <td style="width: 200px;">
+                                     <a href="{{path('app_stage_edit' , {id: stage.id})}}" class='btn btn-success'>Modifier</a>
+                    
+                               
+                                
+                               
+                               
+                        
+
+                                <a href="#" onclick="event.preventDefault(); showDeleteConfirmation({{ stage.id }});" class="btn btn-danger">Supprimer</a>
+                                <div class="modal" id="delete-confirmation-modal-{{ stage.id }}">
+                                    <div class="modal-content">
+                                        <p>Êtes-vous sûr de vouloir supprimer cet Stage ?</p>
+                                        <div class="modal-buttons">
+                                            <button class="btn btn-danger" onclick="confirmDelete({{ stage.id }});">Yes</button>
+                                            <button class="btn btn-secondary" onclick="cancelDelete({{ stage.id }});">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form id="stage-delete-form-{{ stage.id }}" action="{{ path('app_stage_delete', {id: stage.id}) }}" method="post" style="display: none;">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token('stage_deletion_' ~ stage.id) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                </form>
+
+
+                            </td>
+                        </tr>
+
+                    
+                    </div>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $('#stagiaires-table').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [4] } // The column number (zero-based) you want to disable sorting on
+            ]
+        });
+    });
+
+
+    function showDeleteConfirmation(stageId) {
+        const modal = document.getElementById('delete-confirmation-modal-' + stageId);
+        modal.style.display = 'block';
+    }
+
+    function confirmDelete(stageId) {
+        const modal = document.getElementById('delete-confirmation-modal-' + stageId);
+        modal.style.display = 'none';
+
+        // Submit the delete form
+        const form = document.getElementById('stage-delete-form-' + stageId);
+        form.submit();
+    }
+
+    function cancelDelete(stageId) {
+        const modal = document.getElementById('delete-confirmation-modal-' + stageId);
+        modal.style.display = 'none';
+    }
+    </script>
+
+
+
+{% endblock %}
+

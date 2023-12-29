@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'STEG Stages' %}
+
+{% block body %}
+
+<style>
+  body {
+    color: #000000; /* Change text color to black for better visibility */
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+  }
+
+  .stage-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .stage-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .stage-description {
+    font-size: 18px;
+  }
+
+  .stage-details {
+    font-size: 16px;
+  }
+
+  
+</style>
+
+<div class="example-wrapper">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          {% for stage in stages %}
+            <div class="stage-card">
+              <h2 class="stage-title">{{ stage.titre }}</h2>
+              <p class="stage-description">{{ stage.description }}</p>
+              <p class="stage-details">
+                Type: {{ stage.typeStage }} 
+              </p>
+              <p class="stage-details">
+              Durée: {{ stage.duree }} mois
+              </p>
+
+              <a href="{{path('app_user_front_postuler', {id: stage.id})}}" class='btn btn-success'>Postuler</a>
+            
+            
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
